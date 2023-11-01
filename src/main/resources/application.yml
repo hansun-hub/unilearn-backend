@@ -19,6 +19,10 @@ spring:
         format_sql: true
         show_sql: true
     defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
 jwt:
   header: Authorization
   secret: c3d1LWxpa2UtbGlvbi0xMXRoLXVuaWxlYXJuLXNlY3JldC1rZXktMjAyMwo=

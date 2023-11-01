@@ -7,4 +7,6 @@ import unilearn.unilearn.user.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByLoginId(String loginId);
+    User findByNickname(String nickname);
+    User findByEmail(String email);
 }

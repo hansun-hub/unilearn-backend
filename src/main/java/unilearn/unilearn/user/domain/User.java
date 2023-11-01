@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="user")
 @EqualsAndHashCode(of = "id", callSuper = false)
-@Getter @Builder @AllArgsConstructor @NoArgsConstructor
+@Getter @Builder @AllArgsConstructor @NoArgsConstructor @ToString
 public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -34,6 +34,11 @@ public class User implements UserDetails {
     private String password;
     @Column(length = 50, unique = true)
     private String nickname;
+
+    @ManyToOne
+    @JoinColumn(name="school_id")
+    private School school;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private final List<String> roles = new ArrayList<>();
