@@ -2,7 +2,7 @@ package unilearn.unilearn.user.service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import unilearn.unilearn.user.domain.School;
+import unilearn.unilearn.user.entity.School;
 
 import java.util.Collection;
 import java.util.List;

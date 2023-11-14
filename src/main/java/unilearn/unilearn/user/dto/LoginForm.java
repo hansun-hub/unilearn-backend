@@ -1,4 +1,4 @@
-package unilearn.unilearn.user.domain;
+package unilearn.unilearn.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

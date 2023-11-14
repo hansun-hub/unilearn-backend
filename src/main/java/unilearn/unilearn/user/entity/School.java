@@ -1,4 +1,4 @@
-package unilearn.unilearn.user.domain;
+package unilearn.unilearn.user.entity;
 
 import lombok.*;
 
