@@ -14,9 +14,11 @@ import org.springframework.validation.BindingResult;
 import unilearn.unilearn.user.dto.LoginForm;
 import unilearn.unilearn.user.entity.School;
 import unilearn.unilearn.user.dto.SignUpForm;
+import unilearn.unilearn.user.entity.Temperature;
 import unilearn.unilearn.user.entity.User;
 import unilearn.unilearn.user.jwt.JwtTokenProvider;
 import unilearn.unilearn.user.repository.SchoolRepository;
+import unilearn.unilearn.user.repository.TemperatureRepository;
 import unilearn.unilearn.user.repository.UserRepository;
 
 import java.util.*;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final SchoolRepository schoolRepository;
+    private final TemperatureRepository temperatureRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
@@ -49,7 +52,15 @@ public class UserService {
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build();
-        return userRepository.save(user);
+        User newUser = userRepository.save(user);
+
+        Temperature temperature = Temperature.builder()
+                .user(user)
+                .temperature(36.5)
+                .build();
+        temperatureRepository.save(temperature);
+
+        return newUser;
     }
 
     private void getAuthentication(String loginId, String password){

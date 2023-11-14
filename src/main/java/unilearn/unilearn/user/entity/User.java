@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import unilearn.unilearn.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
@@ -17,7 +18,8 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="user")
 @EqualsAndHashCode(of = "id", callSuper = false)
-@Getter @Builder @AllArgsConstructor @NoArgsConstructor @ToString
+@Getter @Builder @AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Transactional
 public class User extends BaseTimeEntity implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity @Getter @Builder
 @AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Transactional
-public class MySubjects {
+public class MySubject {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="my_subjects_id")
     private Long id;

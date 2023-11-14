@@ -18,5 +18,5 @@ public class Temperature {
     @JoinColumn(name = "user_id")
     private User user;
     @ColumnDefault("36.5")
-    private float temperature;
+    private double temperature;
 }
