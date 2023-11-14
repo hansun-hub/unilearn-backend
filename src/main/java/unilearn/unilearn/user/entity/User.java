@@ -1,10 +1,11 @@
-package unilearn.unilearn.user.domain;
+package unilearn.unilearn.user.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import unilearn.unilearn.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Table(name="user")
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Getter @Builder @AllArgsConstructor @NoArgsConstructor @ToString
-public class User implements UserDetails {
+public class User extends BaseTimeEntity implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
     private Long id;

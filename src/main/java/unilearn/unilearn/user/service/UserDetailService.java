@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import unilearn.unilearn.user.config.UserSecurityAdapter;
-import unilearn.unilearn.user.domain.User;
+import unilearn.unilearn.user.entity.User;
 import unilearn.unilearn.user.repository.UserRepository;
 
 @Service
