@@ -17,6 +17,9 @@ $RECYCLE.BIN/
 !.git*
 *~
 
+### database ###
+*.yml
+*.properties
 
 ### OSX ###
 .DS_Store

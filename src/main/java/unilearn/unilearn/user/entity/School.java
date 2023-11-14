@@ -12,4 +12,5 @@ public class School {
     @Column(name="school_id")
     private Long id;
     private String schoolName;
+    private String emailFormat;
 }
