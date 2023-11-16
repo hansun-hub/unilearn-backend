@@ -49,6 +49,9 @@ Icon
 build/
 
 
+gradlew
+gradlew.bat
+
 ### Eclipse ###
 *.pydevproject
 .project
