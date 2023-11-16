@@ -46,7 +46,11 @@ Icon
 ### Gradle ###
 # Exclude Folder List #
 .gradle/
+gradlew
+gradlew.bat
 build/
+
+
 
 
 ### Eclipse ###
@@ -90,3 +94,5 @@ local.properties
 target/
 
 /bin
+gradlew
+gradlew.bat
