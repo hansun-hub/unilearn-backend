@@ -25,6 +25,5 @@ public class Assignment {
 
     private String photo; // 사진
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deadline; // *마감일
+
 }

@@ -23,8 +23,5 @@ public class Quiz {
 
     private String content; // 내용
 
-    private String photo; // 사진
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deadline; // *마감일
 }
