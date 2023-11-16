@@ -90,3 +90,5 @@ local.properties
 target/
 
 /bin
+gradlew
+gradlew.bat
