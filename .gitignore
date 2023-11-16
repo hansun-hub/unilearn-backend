@@ -45,9 +45,6 @@ Icon
 
 ### Gradle ###
 # Exclude Folder List #
-.gradle
-gradlew
-gradlew.bat
 .gradle/
 build/
 
