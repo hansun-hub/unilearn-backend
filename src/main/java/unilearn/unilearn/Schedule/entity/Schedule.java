@@ -1,8 +1,12 @@
-package unilearn.unilearn.user.entity;
+package unilearn.unilearn.Schedule.entity;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
+import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 import unilearn.unilearn.global.entity.BaseTimeEntity;
+import unilearn.unilearn.studySchedule.entity.StudySchedule;
+import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 
@@ -19,6 +23,10 @@ public class Schedule extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
-
-    // 엔티티 합쳐지면 스터디일정, 과제 추가
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="study_schedule_id")
+    private StudySchedule studySchedule;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="assignments_posts_id")
+    private AssignmentsPosts assignmentsPosts;
 }
