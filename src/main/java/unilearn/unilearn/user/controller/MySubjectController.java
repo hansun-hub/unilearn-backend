@@ -44,7 +44,7 @@ public class MySubjectController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseForm);
     }
 
-    @GetMapping("/user_courses")
+    @GetMapping("/user-courses")
     public ResponseEntity<List<MySubjectResponseDto.MySubjectResponseListForm>> list(Principal principal) {
         if (principal.getName() == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
