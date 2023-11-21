@@ -18,6 +18,6 @@ public class MySubject {
     private String sbjName; // 수강과목
     private String department; // 학과
     private int year; // 개설연도
-    private int semester; // 개설학기
+    private String semester; // 개설학기
     private String professor; // 개설교수
 }
