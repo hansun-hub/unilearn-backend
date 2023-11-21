@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="user")
+@Table(name="`user`")
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Getter @Builder @AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Transactional

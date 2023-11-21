@@ -1,8 +1,9 @@
-package unilearn.unilearn.user.entity;
+package unilearn.unilearn.alarm.entity;
 
 import lombok.*;
 import org.springframework.transaction.annotation.Transactional;
 import unilearn.unilearn.global.entity.BaseTimeEntity;
+import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package unilearn.unilearn.user.entity;
+package unilearn.unilearn.study.entity;
 
 
 import lombok.*;
