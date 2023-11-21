@@ -1,9 +1,8 @@
-package unilearn.unilearn.assignmentsSubmitPosts.domain;
+package unilearn.unilearn.assignmentsSubmitPosts.entity;
 
 import lombok.*;
 import unilearn.unilearn.assignmentsSubmitPosts.constant.SubStatus;
-import unilearn.unilearn.user.domain.School;
-import unilearn.unilearn.user.domain.User;
+import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
