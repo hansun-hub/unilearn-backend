@@ -6,12 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import unilearn.unilearn.user.dto.LoginForm;
 import unilearn.unilearn.user.dto.SignUpForm;
+import unilearn.unilearn.user.dto.UserDto;
 import unilearn.unilearn.user.exception.UserNotValidException;
 import unilearn.unilearn.user.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -40,5 +43,42 @@ public class UserController {
     @GetMapping("/login")
     public String login(@RequestBody LoginForm form){
         return userService.login(form);
+    }
+
+    @GetMapping("/api/user-detail")
+    public ResponseEntity<UserDto.UserResponseDto> getUserProfile(Principal principal){
+        if (principal.getName() == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        UserDto.UserResponseDto responseDto = userService.getUserProfile(principal);
+        if (responseDto == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @PostMapping("/api/user-detail")
+    public ResponseEntity updateUserDetail(@RequestBody @Valid UserDto.UserRequestDto form,
+                                           BindingResult bindingResult, Principal principal) {
+        if (principal.getName() == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } else if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        userService.updateUserProfile(form, principal);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/api/user-profile")
+    public ResponseEntity<?> updateUserAuth(@RequestParam("student-card") MultipartFile studentImage,
+                                            @Valid @RequestBody UserDto.UserAuthRequestDto form,
+                                            BindingResult bindingResult, Principal principal) {
+        if (principal == null || principal.getName() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } else if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        userService.updateUserAuth(form, principal, studentImage);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
