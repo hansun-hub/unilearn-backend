@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unilearn.unilearn.study.dto.*;
+import unilearn.unilearn.study.exception.UserNotFoundException;
 import unilearn.unilearn.subject.entity.Subject;
 import unilearn.unilearn.subject.repository.SubjectRepository;
 import unilearn.unilearn.user.dto.MemberDTO;
@@ -13,6 +14,7 @@ import unilearn.unilearn.study.entity.Study;
 import unilearn.unilearn.user.entity.User;
 import unilearn.unilearn.user.exception.StudyNotFoundException;
 import unilearn.unilearn.study.repository.StudyRepository;
+import unilearn.unilearn.user.repository.UserRepository;
 
 import java.time.LocalTime;
 import java.util.*;
@@ -22,14 +24,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class StudyService {
 
+    private final UserRepository userRepository;
     @Autowired
     private StudyRepository studyRepository;
     @Autowired
     private SubjectRepository subjectRepository;
 
-    public StudyService(StudyRepository studyRepository, SubjectRepository subjectRepository) {
+    public StudyService(StudyRepository studyRepository, SubjectRepository subjectRepository,UserRepository userRepository) {
         this.studyRepository = studyRepository;
         this.subjectRepository = subjectRepository;
+        this.userRepository = userRepository;
     }
 
     //스터디전체조회(개설과목)
@@ -94,45 +98,6 @@ public class StudyService {
         }
 
         return members;
-    }
-
-    //스터디생성
-    public Long createStudy(StudyCreateRequestDTO requestDTO) {
-        Study study = new Study();
-        // Set values from requestDTO to study entity
-        study.setStudyName(requestDTO.getStudyName());
-        study.setIsOpen(requestDTO.isOpen());
-        study.setSubjectMajor(requestDTO.getSubjectMajor());
-        study.setSubjectName(requestDTO.getSubjectName());
-        study.setSubjectProfessor(requestDTO.getSubjectProfessor());
-        study.setSubjectYear(requestDTO.getSubjectYear());
-        study.setSubjectSemester(requestDTO.getSubjectSemester());
-        study.setStudyContent(requestDTO.getStudyContent());
-        study.setIsOffline(requestDTO.isOffline());
-        study.setOfflineLocation(requestDTO.getOfflineLocation());
-        study.setStudyRecruitedNum(requestDTO.getStudyRecruitedNum());
-        study.setStudyDeposit(requestDTO.getStudyDeposit());
-        study.setStudyStartDay(requestDTO.getStudyStartDay());
-        study.setStudyDeadline(requestDTO.getStudyDeadline());
-        study.setStudyStatus(requestDTO.getStudyStatus());
-
-        // Set RegularMeetings
-        List<RegularMeetingDTO> regularMeetingsDTO = requestDTO.getRegularMeetings();
-        if (regularMeetingsDTO != null) {
-            Set<RegularMeeting> regularMeetings = regularMeetingsDTO.stream()
-                    .map(dto -> RegularMeeting.builder()
-                            .day_of_week(dto.getDayOfWeek())
-                            .start_time(LocalTime.parse(dto.getStartTime()))
-                            .end_time(LocalTime.parse(dto.getEndTime()))
-                            .study(study)
-                            .build())
-                    .collect(Collectors.toSet());
-
-            study.setRegularMeetings(regularMeetings);
-        }
-        // Save the study entity
-        Study savedStudy = studyRepository.save(study);
-        return savedStudy.getStudy_id();
     }
 
 }

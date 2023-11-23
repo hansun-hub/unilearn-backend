@@ -159,5 +159,13 @@ public class Study {
         this.study_deadline = studyDeadline;
     }
 
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+
+    public void setUserId(User user) {
+        this.user = user;
+    }
+
 
 }

@@ -6,9 +6,10 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-@Getter
-@Setter
+@Getter @Setter
 public class StudyCreateRequestDTO {
+
+    private Long user;
     private String studyName;
     private boolean isOpen;
     private String subjectMajor;
