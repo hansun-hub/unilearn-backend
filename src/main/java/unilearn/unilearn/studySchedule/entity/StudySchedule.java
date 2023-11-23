@@ -26,11 +26,11 @@ public class StudySchedule {
     private Long id;
 
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
     private Study study;
-    */
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
