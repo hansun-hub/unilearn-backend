@@ -3,6 +3,7 @@ package unilearn.unilearn.assignmentsPosts.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
+import unilearn.unilearn.study.entity.Study;
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
@@ -20,11 +21,12 @@ public class AssignmentsPosts {
     @Column(name="assignments_posts_id")
     private Long id;
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
+    private Study study;
 
-    private Study study;*/
+
 
     @OneToMany(mappedBy = "assignmentsPosts", cascade = CascadeType.ALL)
     @JsonIgnore

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentListDto;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
+import unilearn.unilearn.study.entity.Study;
+import unilearn.unilearn.study.repository.StudyRepository;
 import unilearn.unilearn.studyDetailRepository.AssignmentPostRepository;
+import unilearn.unilearn.user.exception.StudyNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,13 +18,15 @@ public class AssignmentPostService {
 
     @Autowired
     private AssignmentPostRepository assignmentPostRepository;
-
-
+    @Autowired
+    private StudyRepository studyRepository;
     //과제 게시글 전체 조회 - 마감전
-    public  List<AssignmentListDto> getAllAssignmentPostsBeforeDeadline() {
+    public  List<AssignmentListDto> getAllAssignmentPostsBeforeDeadline(Long study_id) {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
-        List<AssignmentsPosts> assignmentsPostsList =  assignmentPostRepository.findByStatus("before");
+        Study study = studyRepository.findById(study_id)
+                .orElseThrow(() -> new StudyNotFoundException("Study not found with id: " + study_id));
+        List<AssignmentsPosts> assignmentsPostsList =  assignmentPostRepository.findByStatusAndStudy("before",study);
         return assignmentsPostsList.stream()
                 .map(this::convertAssignmentsPosts)
                 .collect(Collectors.toList());
@@ -39,9 +44,11 @@ public class AssignmentPostService {
 
 
     //과제 게시글 전체 조회 - 마감후
-    public List<AssignmentListDto> getAllAssignmentPostsAfterDeadline() {
+    public List<AssignmentListDto> getAllAssignmentPostsAfterDeadline(Long study_id) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        List<AssignmentsPosts> assignmentsPostsList = assignmentPostRepository.findByStatus("after");
+        Study study = studyRepository.findById(study_id)
+                .orElseThrow(() -> new StudyNotFoundException("Study not found with id: " + study_id));
+        List<AssignmentsPosts> assignmentsPostsList = assignmentPostRepository.findByStatusAndStudy("after",study);
         return assignmentsPostsList.stream()
                 .map(this::convertAssignmentsPosts)
                 .collect(Collectors.toList());

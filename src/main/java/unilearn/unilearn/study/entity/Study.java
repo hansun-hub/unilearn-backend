@@ -57,7 +57,7 @@ public class Study {
     @Column(nullable = false)
     private String subject_professor;
 
-    @Column(nullable = false)
+    @Column(name = "subject_year", nullable = false)
     private int subject_year;
 
     @Column(nullable = false)
