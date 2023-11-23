@@ -3,7 +3,7 @@ package unilearn.unilearn.update;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentsPosts;
+import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 import unilearn.unilearn.studyDetailRepository.AssignmentPostRepository;
 
 import java.util.List;

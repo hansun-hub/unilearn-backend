@@ -2,8 +2,8 @@ package unilearn.unilearn.studyDetailRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.AssignmentsSubmitPosts;
-import unilearn.unilearn.evaluation.domain.Evaluation;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
+import unilearn.unilearn.evaluation.entity.Evaluation;
 import unilearn.unilearn.user.entity.User;
 
 import java.util.Optional;

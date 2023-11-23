@@ -2,9 +2,8 @@ package unilearn.unilearn.studyDetailRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentsPosts;
+import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 //과제 게시글 레포지토리

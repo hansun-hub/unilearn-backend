@@ -1,4 +1,4 @@
-package unilearn.unilearn.assignmentsPosts.domain;
+package unilearn.unilearn.assignmentsPosts.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Builder

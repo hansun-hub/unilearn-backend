@@ -1,4 +1,4 @@
-package unilearn.unilearn.assignmentsSubmitPosts.domain;
+package unilearn.unilearn.assignmentsSubmitPosts.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

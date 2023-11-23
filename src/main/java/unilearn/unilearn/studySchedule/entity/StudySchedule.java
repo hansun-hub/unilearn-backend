@@ -1,4 +1,4 @@
-package unilearn.unilearn.studySchedule.domain;
+package unilearn.unilearn.studySchedule.entity;
 
 import lombok.*;
 import unilearn.unilearn.study.entity.Study;

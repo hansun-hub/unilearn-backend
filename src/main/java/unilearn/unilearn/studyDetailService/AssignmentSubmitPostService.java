@@ -2,16 +2,12 @@ package unilearn.unilearn.studyDetailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentListDto;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentsPosts;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentsPostsDto;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.AssignmentsSubmitPosts;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.SubmitDetailDto;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.SubmitListDto;
+import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitDetailDto;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitListDto;
 import unilearn.unilearn.studyDetailRepository.AssignmentSubmitPostRepository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

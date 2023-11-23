@@ -1,4 +1,4 @@
-package unilearn.unilearn.evaluation.domain;
+package unilearn.unilearn.evaluation.entity;
 
 public class EvaluationDto {
     private String feedback;

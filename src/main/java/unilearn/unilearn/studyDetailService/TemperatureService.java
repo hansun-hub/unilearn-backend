@@ -2,9 +2,7 @@ package unilearn.unilearn.studyDetailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unilearn.unilearn.assignmentsPosts.domain.AssignmentsPosts;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.ViewTemperatureDto;
-import unilearn.unilearn.studyDetailRepository.AssignmentSubmitPostRepository;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.ViewTemperatureDto;
 import unilearn.unilearn.user.entity.Temperature;
 import unilearn.unilearn.user.entity.User;
 import unilearn.unilearn.user.repository.TemperatureRepository;

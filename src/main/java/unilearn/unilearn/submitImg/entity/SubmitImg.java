@@ -1,7 +1,7 @@
-package unilearn.unilearn.submitImg.domain;
+package unilearn.unilearn.submitImg.entity;
 
 import lombok.*;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.AssignmentsSubmitPosts;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
 
 import javax.persistence.*;
 

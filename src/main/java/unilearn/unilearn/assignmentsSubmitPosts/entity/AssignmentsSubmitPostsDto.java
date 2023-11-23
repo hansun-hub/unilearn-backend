@@ -1,8 +1,4 @@
-package unilearn.unilearn.assignmentsSubmitPosts.domain;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
+package unilearn.unilearn.assignmentsSubmitPosts.entity;
 
 import java.time.LocalDateTime;
 

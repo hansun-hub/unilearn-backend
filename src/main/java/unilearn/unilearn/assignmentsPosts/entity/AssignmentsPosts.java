@@ -1,8 +1,8 @@
-package unilearn.unilearn.assignmentsPosts.domain;
+package unilearn.unilearn.assignmentsPosts.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import unilearn.unilearn.assignmentsSubmitPosts.domain.AssignmentsSubmitPosts;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
