@@ -19,6 +19,17 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
+    @GetMapping("/monthly-schedule-count")
+    public ResponseEntity<ScheduleResponseDto.MonthResponseDto> monthlyCount(
+            @RequestParam("year")int yearNumber, @RequestParam("month")int monthNumber,
+            Principal principal) {
+        if (principal == null || principal.getName() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        ScheduleResponseDto.MonthResponseDto responseDto = scheduleService.monthlyCount(yearNumber, monthNumber, principal);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
     @GetMapping("/todays-schedule-count")
     public ResponseEntity<ScheduleResponseDto.TodayScheduleCountDto> todayCount(Principal principal){
         if (principal == null || principal.getName() == null) {
