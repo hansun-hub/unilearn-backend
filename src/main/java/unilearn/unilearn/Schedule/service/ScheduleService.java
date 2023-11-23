@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.MemberRemoval;
 import org.springframework.stereotype.Service;
+import unilearn.unilearn.Schedule.dto.ScheduleRequestDto;
 import unilearn.unilearn.Schedule.dto.ScheduleResponseDto;
 import unilearn.unilearn.Schedule.entity.Schedule;
 import unilearn.unilearn.Schedule.repository.ScheduleRepository;
@@ -38,7 +39,7 @@ public class ScheduleService {
         return ScheduleResponseDto.OneDayScheduleResponseDto.builder()
                 .schedule_id(schedule.getId())
                 .schedule_name(schedule.getContent())
-                .schedule_completed(schedule.isChecked())
+                .schedule_completed(schedule.getChecked())
                 .deadline(schedule.getDeadline())
                 .build();
     }
@@ -49,5 +50,30 @@ public class ScheduleService {
         return scheduleList.stream()
                 .map(schedule -> toOneDayScheduleResponseDto(schedule))
                 .collect(Collectors.toList());
+    }
+
+    public List<ScheduleResponseDto.OneDayScheduleResponseDto> createSchedule(
+            ScheduleRequestDto.ScheduleCreateDto form, Principal principal) {
+        User user = userRepository.findByNickname(principal.getName());
+        Schedule schedule = Schedule.builder()
+                .deadline(form.getDate())
+                .content(form.getSchedule_name())
+                .user(user)
+                .build();
+        scheduleRepository.save(schedule);
+        List<Schedule> scheduleList = scheduleRepository.findByUserAndDeadline(user, form.getDate());
+        return scheduleList.stream()
+                .map(schd -> toOneDayScheduleResponseDto(schd))
+                .collect(Collectors.toList());
+    }
+
+    public void checkSchedule(Long scheduleId, Principal principal) {
+        User user = userRepository.findByNickname(principal.getName());
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new IllegalArgumentException());
+        if (!schedule.getUser().equals(user)) {
+            throw new IllegalArgumentException();
+        }
+        schedule.setChecked();
+        scheduleRepository.save(schedule);
     }
 }

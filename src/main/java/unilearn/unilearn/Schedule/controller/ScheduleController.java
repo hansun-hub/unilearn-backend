@@ -1,12 +1,11 @@
 package unilearn.unilearn.Schedule.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import unilearn.unilearn.Schedule.dto.ScheduleRequestDto;
 import unilearn.unilearn.Schedule.dto.ScheduleResponseDto;
 import unilearn.unilearn.Schedule.service.ScheduleService;
 
@@ -31,11 +30,30 @@ public class ScheduleController {
 
     @GetMapping("/daily-schedule")
     public ResponseEntity<List<ScheduleResponseDto.OneDayScheduleResponseDto>> oneDayList(
-            @RequestParam("date") LocalDate deadline, Principal principal){
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline, Principal principal){
         if (principal == null || principal.getName() == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         List<ScheduleResponseDto.OneDayScheduleResponseDto> responseFormList = scheduleService.onedayList(deadline, principal);
         return ResponseEntity.status(HttpStatus.OK).body(responseFormList);
+    }
+
+    @PostMapping("/create-schedule")
+    public ResponseEntity<List<ScheduleResponseDto.OneDayScheduleResponseDto>> createSchedule(
+            @RequestBody ScheduleRequestDto.ScheduleCreateDto form, Principal principal){
+        if (principal == null || principal.getName() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<ScheduleResponseDto.OneDayScheduleResponseDto> responseFormList = scheduleService.createSchedule(form, principal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseFormList);
+    }
+
+    @PutMapping("/update-schedule/{schedule_id}")
+    public ResponseEntity<?> checkSchedule(@PathVariable("schedule_id") Long scheduleId, Principal principal){
+        if (principal == null || principal.getName() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        scheduleService.checkSchedule(scheduleId, principal);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

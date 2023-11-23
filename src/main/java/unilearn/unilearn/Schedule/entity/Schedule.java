@@ -37,4 +37,11 @@ public class Schedule extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="assignments_posts_id")
     private AssignmentsPosts assignmentsPosts;
+
+    public boolean getChecked(){
+        return this.checked;
+    }
+    public void setChecked(){
+        this.checked = this.checked == true?false:true;
+    }
 }
