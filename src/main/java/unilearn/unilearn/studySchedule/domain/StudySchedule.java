@@ -1,11 +1,10 @@
 package unilearn.unilearn.studySchedule.domain;
 
 import lombok.*;
-import unilearn.unilearn.user.domain.User;
+import unilearn.unilearn.study.entity.Study;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,14 +20,14 @@ public class StudySchedule {
     @Column(name="study_schedule_id")
     private Long id;
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
     private Study study;
-    */
 
-    @OneToMany(mappedBy = "user")
-    private List<User> studyScheduleUsers;
+
+    /*@OneToMany(mappedBy = "user")
+    private List<User> studyScheduleUsers;*/
 
     private int year;
     private int month;
