@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.MySubmitDto;
 import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitDetailDto;
 import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitListDto;
+import unilearn.unilearn.studyDetailRepository.AssignmentPostRepository;
 import unilearn.unilearn.studyDetailRepository.AssignmentSubmitPostRepository;
+import unilearn.unilearn.user.entity.User;
+import unilearn.unilearn.user.exception.StudyNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +21,8 @@ public class AssignmentSubmitPostService {
 
     @Autowired
     private AssignmentSubmitPostRepository assignmentSubmitPostRepository;
+    @Autowired
+    AssignmentPostRepository assignmentPostRepository;
     public List<SubmitListDto> submitListGet (AssignmentsPosts assignmentsPosts) {
         List<AssignmentsSubmitPosts> assignmentsSubmitPosts = assignmentSubmitPostRepository.findByAssignmentsPosts(assignmentsPosts);
         return assignmentsSubmitPosts.stream()
@@ -34,6 +40,14 @@ public class AssignmentSubmitPostService {
                 .build();
 
     }
+
+    public MySubmitDto getMysubmit (Long postId, User user){
+        AssignmentsPosts assignmentsPosts = assignmentPostRepository.findById(postId)
+                .orElseThrow(() -> new StudyNotFoundException("post not found with id: " + postId));
+        AssignmentsSubmitPosts submitPosts =  assignmentSubmitPostRepository.findByAssignmentsPostsAndUser(assignmentsPosts, user);
+        return MySubmitDto.builder().content(submitPosts.getContent()).build();
+    }
+
 
 
     public SubmitListDto submitList(AssignmentsSubmitPosts assignmentsSubmitPosts) {
@@ -65,6 +79,7 @@ public class AssignmentSubmitPostService {
 
             return assignmentSubmitPostRepository.save(existingPost);
         }
+
 
 
 }

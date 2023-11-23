@@ -2,10 +2,7 @@ package unilearn.unilearn.subject.entity;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 // 개설 과목 엔티티
 @Getter
@@ -21,7 +18,7 @@ public class Subject {
     private String className; // 수업명
 
     private String professor; // 교수님
-
+    @Column(name = "`year`")//안 하면 sql문 에러나서 수정했습니다. - 서윤
     private int year; // 연도
 
     private int semester; // 학기

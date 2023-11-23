@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
+import unilearn.unilearn.user.entity.User;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface AssignmentSubmitPostRepository extends JpaRepository<Assignment
 
 
     List<AssignmentsSubmitPosts> findByAssignmentsPosts(AssignmentsPosts assignmentsPosts);
+    AssignmentsSubmitPosts findByAssignmentsPostsAndUser(AssignmentsPosts assignmentsPosts , User user);
 
 
 }
