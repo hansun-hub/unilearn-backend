@@ -90,4 +90,5 @@ public class User extends BaseTimeEntity implements UserDetails {
     public void updateIntroduction(String introduction) {
         this.introduction = introduction;
     }
+
 }
