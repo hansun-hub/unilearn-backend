@@ -2,6 +2,7 @@ package unilearn.unilearn.user.entity;
 
 
 import lombok.*;
+import unilearn.unilearn.study.entity.Study;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
