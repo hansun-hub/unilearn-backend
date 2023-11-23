@@ -2,8 +2,6 @@ package unilearn.unilearn.study.entity;
 
 import lombok.*;
 import unilearn.unilearn.subject.entity.Subject;
-import unilearn.unilearn.user.entity.RegularMeeting;
-import unilearn.unilearn.user.entity.StdList;
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;

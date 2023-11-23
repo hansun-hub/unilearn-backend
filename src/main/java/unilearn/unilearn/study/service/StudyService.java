@@ -4,19 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unilearn.unilearn.study.dto.*;
-import unilearn.unilearn.study.exception.UserNotFoundException;
 import unilearn.unilearn.subject.entity.Subject;
 import unilearn.unilearn.subject.repository.SubjectRepository;
 import unilearn.unilearn.user.dto.MemberDTO;
-import unilearn.unilearn.user.entity.RegularMeeting;
-import unilearn.unilearn.user.entity.StdList;
+import unilearn.unilearn.study.entity.StdList;
 import unilearn.unilearn.study.entity.Study;
 import unilearn.unilearn.user.entity.User;
 import unilearn.unilearn.user.exception.StudyNotFoundException;
 import unilearn.unilearn.study.repository.StudyRepository;
 import unilearn.unilearn.user.repository.UserRepository;
 
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
