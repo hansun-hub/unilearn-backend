@@ -1,6 +1,8 @@
 package unilearn.unilearn.study.entity;
 import lombok.*;
+
 import unilearn.unilearn.study.entity.Study;
+
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;

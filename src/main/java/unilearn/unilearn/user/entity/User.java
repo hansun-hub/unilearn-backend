@@ -2,6 +2,7 @@ package unilearn.unilearn.user.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="`user`")
 @EqualsAndHashCode(of = "id", callSuper = false)
-@Getter @Builder @AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Transactional
 public class User extends BaseTimeEntity implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +46,10 @@ public class User extends BaseTimeEntity implements UserDetails {
     @JoinColumn(name="school_id")
     private School school;
 
+
     @OneToOne(mappedBy = "user")
     private Temperature temperature;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

@@ -3,6 +3,7 @@ import lombok.*;
 
 import unilearn.unilearn.study.entity.Study;
 import unilearn.unilearn.subject.entity.Subject;
+
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
@@ -27,8 +28,15 @@ public class StdList {
     @JoinColumn(name = "study_id", nullable = false)
     private Study study;
 
+
+//    subject 테이블 부재
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "subject_id", nullable = false)
+//    private Subject subject;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
+
 
 }

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
-@Entity @Getter @Builder
+@Entity @Getter@Setter @Builder
 @NoArgsConstructor(access = AccessLevel.PUBLIC) @AllArgsConstructor
 @Transactional
 public class Temperature {
@@ -17,6 +17,6 @@ public class Temperature {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ColumnDefault("36.5")
-    private double temperature;
+
+    private double temperature = 36.5;
 }

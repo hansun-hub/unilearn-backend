@@ -1,10 +1,16 @@
 package unilearn.unilearn.studySchedule.entity;
 
 import lombok.*;
+
+import unilearn.unilearn.study.entity.Study;
+
+import java.util.List;
+
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name="studyschedule")
@@ -18,6 +24,7 @@ public class StudySchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="study_schedule_id")
     private Long id;
+
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,11 +40,14 @@ public class StudySchedule {
 //    private int month;
 //    private String date;
     private LocalDateTime scheduleDate;
+
     private String scheduleName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+
 //    @ElementCollection
 //    private List<Integer> scheduleCount;
+
 
 }

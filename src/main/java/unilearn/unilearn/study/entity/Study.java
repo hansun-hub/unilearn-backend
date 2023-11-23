@@ -2,12 +2,15 @@ package unilearn.unilearn.study.entity;
 
 import lombok.*;
 
+
 import unilearn.unilearn.subject.entity.Subject;
+
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,6 @@ public class Study {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -38,11 +40,13 @@ public class Study {
     private String study_image;
 
 
+
     @Column(nullable = false,name="study_status")
     private String studyStatus;
 
     @Column(nullable = false, name="is_open")
     private boolean isOpen;
+
 
     @Column(nullable = false)
     private String subject_name;
@@ -79,6 +83,7 @@ public class Study {
 
     @Column(nullable = false)
     private LocalDate study_deadline;
+
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private Set<StdList> stdList;
@@ -168,4 +173,5 @@ public class Study {
     public void setUserId(User user) {
         this.user = user;
     }
+
 }
