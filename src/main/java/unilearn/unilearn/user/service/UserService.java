@@ -133,8 +133,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    // 미완성
-    public void updateUserAuth(UserDto.UserAuthRequestDto form, Principal principal, MultipartFile images) {
-
-    }
 }
