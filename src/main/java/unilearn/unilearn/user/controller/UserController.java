@@ -69,16 +69,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/api/user-profile")
-    public ResponseEntity<?> updateUserAuth(@RequestParam("student-card") MultipartFile studentImage,
-                                            @Valid @RequestBody UserDto.UserAuthRequestDto form,
-                                            BindingResult bindingResult, Principal principal) {
-        if (principal == null || principal.getName() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        userService.updateUserAuth(form, principal, studentImage);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+//    @PostMapping("/api/user-profile")
+//    public ResponseEntity<?> updateUserAuth(@RequestParam("student-card") MultipartFile studentImage,
+//                                            @Valid @RequestBody UserDto.UserAuthRequestDto form,
+//                                            BindingResult bindingResult, Principal principal) {
+//        if (principal == null || principal.getName() == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        } else if (bindingResult.hasErrors()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//        userService.updateUserAuth(form, principal, studentImage);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//    }
 }
