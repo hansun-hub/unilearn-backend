@@ -1,11 +1,14 @@
 package unilearn.unilearn.subject.entity;
 
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 // 개설 과목 엔티티
+@Getter
 @Entity
 public class Subject {
 
@@ -22,5 +25,6 @@ public class Subject {
     private int year; // 연도
 
     private int semester; // 학기
+
 }
 

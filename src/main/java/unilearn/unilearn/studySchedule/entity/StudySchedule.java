@@ -1,11 +1,16 @@
 package unilearn.unilearn.studySchedule.entity;
 
 import lombok.*;
+
 import unilearn.unilearn.study.entity.Study;
+
+import java.util.List;
+
+import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Entity
 @Table(name="studyschedule")
@@ -21,22 +26,28 @@ public class StudySchedule {
     private Long id;
 
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
     private Study study;
+    */
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    /*@OneToMany(mappedBy = "user")
-    private List<User> studyScheduleUsers;*/
+//    private int year;
+//    private int month;
+//    private String date;
+    private LocalDateTime scheduleDate;
 
-    private int year;
-    private int month;
-    private String date;
     private String scheduleName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @ElementCollection
-    private List<Integer> scheduleCount;
+
+//    @ElementCollection
+//    private List<Integer> scheduleCount;
+
 
 }

@@ -14,7 +14,7 @@ public class Temperature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "temperature_id")
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

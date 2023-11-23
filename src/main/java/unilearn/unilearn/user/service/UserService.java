@@ -1,7 +1,9 @@
 package unilearn.unilearn.user.service;
 
+//import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+//import unilearn.unilearn.global.config.S3Config;
+import org.springframework.web.multipart.MultipartFile;
 import unilearn.unilearn.user.dto.LoginForm;
+import unilearn.unilearn.user.dto.UserDto;
 import unilearn.unilearn.user.entity.School;
 import unilearn.unilearn.user.dto.SignUpForm;
 import unilearn.unilearn.user.entity.Temperature;
@@ -21,6 +26,7 @@ import unilearn.unilearn.user.repository.SchoolRepository;
 import unilearn.unilearn.user.repository.TemperatureRepository;
 import unilearn.unilearn.user.repository.UserRepository;
 
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,6 +57,8 @@ public class UserService {
                 .school(school)
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .roles(Collections.singletonList("ROLE_USER"))
+                .major("학과 미인증")
+                .studentId("학번 미인증")
                 .build();
         User newUser = userRepository.save(user);
 
@@ -104,5 +112,29 @@ public class UserService {
         }
         getAuthentication(form.getLoginId(), form.getPassword());
         return getJwtToken(user);
+    }
+
+    public UserDto.UserResponseDto getUserProfile(Principal principal) {
+        User user = userRepository.findByNickname(principal.getName());
+        return UserDto.UserResponseDto.builder()
+                .user_id(user.getId())
+                .nickname(user.getNickname())
+                .major(user.getMajor())
+                .student_id(user.getStudentId())
+                .introduction(user.getIntroduction())
+                .school(user.getSchool().getSchoolName())
+                .temperature(user.getTemperature().getTemperature())
+                .build();
+    }
+
+    public void updateUserProfile(UserDto.UserRequestDto form, Principal principal) {
+        User user = userRepository.findByNickname(principal.getName());
+        user.updateIntroduction(form.getIntroduction());
+        userRepository.save(user);
+    }
+
+    // 미완성
+    public void updateUserAuth(UserDto.UserAuthRequestDto form, Principal principal, MultipartFile images) {
+
     }
 }

@@ -38,12 +38,17 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String password;
     @Column(length = 50, unique = true)
     private String nickname;
+    private String studentId;
+    private String major;
+    private String introduction;
 
     @ManyToOne
     @JoinColumn(name="school_id")
     private School school;
 
 
+    @OneToOne(mappedBy = "user")
+    private Temperature temperature;
 
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -83,6 +88,10 @@ public class User extends BaseTimeEntity implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isEnabled() {
         return true;
+    }
+
+    public void updateIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
 }

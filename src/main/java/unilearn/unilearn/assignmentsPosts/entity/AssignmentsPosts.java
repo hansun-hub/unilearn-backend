@@ -7,9 +7,11 @@ import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 // 스터디 - 과제 게시글
+
 @Entity
 @Table(name="assignmentsposts")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
@@ -21,11 +23,13 @@ public class AssignmentsPosts {
     /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
+
     private Study study;*/
 
     @OneToMany(mappedBy = "assignmentsPosts", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<AssignmentsSubmitPosts> assignmentSubmitPosts;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
@@ -33,6 +37,7 @@ public class AssignmentsPosts {
 
     private String status;
     private String title;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -65,6 +70,8 @@ public class AssignmentsPosts {
     }
 
 
+    private String content;
+    
 
 
 }
