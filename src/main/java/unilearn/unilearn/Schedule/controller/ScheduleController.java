@@ -19,6 +19,7 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
+    /** 월별 캘린더 조회 */
     @GetMapping("/monthly-schedule-count")
     public ResponseEntity<ScheduleResponseDto.MonthResponseDto> monthlyCount(
             @RequestParam("year")int yearNumber, @RequestParam("month")int monthNumber,
@@ -29,7 +30,7 @@ public class ScheduleController {
         ScheduleResponseDto.MonthResponseDto responseDto = scheduleService.monthlyCount(yearNumber, monthNumber, principal);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
-
+    /** 오늘의 일정 개수 조회 */
     @GetMapping("/todays-schedule-count")
     public ResponseEntity<ScheduleResponseDto.TodayScheduleCountDto> todayCount(Principal principal){
         if (principal == null || principal.getName() == null) {
@@ -38,7 +39,7 @@ public class ScheduleController {
         ScheduleResponseDto.TodayScheduleCountDto responseForm = scheduleService.todayCount(principal);
         return ResponseEntity.status(HttpStatus.OK).body(responseForm);
     }
-
+    /** 특정 일자의 일정 리스트 조회 */
     @GetMapping("/daily-schedule")
     public ResponseEntity<List<ScheduleResponseDto.OneDayScheduleResponseDto>> oneDayList(
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline, Principal principal){
@@ -48,7 +49,7 @@ public class ScheduleController {
         List<ScheduleResponseDto.OneDayScheduleResponseDto> responseFormList = scheduleService.onedayList(deadline, principal);
         return ResponseEntity.status(HttpStatus.OK).body(responseFormList);
     }
-
+    /** 개인 일정 생성 */
     @PostMapping("/create-schedule")
     public ResponseEntity<List<ScheduleResponseDto.OneDayScheduleResponseDto>> createSchedule(
             @RequestBody ScheduleRequestDto.ScheduleCreateDto form, Principal principal){
@@ -58,7 +59,7 @@ public class ScheduleController {
         List<ScheduleResponseDto.OneDayScheduleResponseDto> responseFormList = scheduleService.createSchedule(form, principal);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseFormList);
     }
-
+    /** 일정 체크 */
     @PutMapping("/update-schedule/{schedule_id}")
     public ResponseEntity<?> checkSchedule(@PathVariable("schedule_id") Long scheduleId, Principal principal){
         if (principal == null || principal.getName() == null) {

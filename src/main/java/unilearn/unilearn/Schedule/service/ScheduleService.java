@@ -80,21 +80,16 @@ public class ScheduleService {
     }
 
     private int[] calculateScheduleCountArray(LocalDate startDay, LocalDate endDay, List<Schedule> scheduleList) {
-//        int[] scheduleCountArray = new int[endDay.getDayOfMonth()];
-//
-//        for (LocalDate date = startDay; date.isBefore(endDay.plusDays(1)); date = date.plusDays(1)) {
-//            long count = scheduleList.stream()
-//                    .filter(schedule -> schedule.getDeadline().equals(date))
-//                    .count();
-//            scheduleCountArray[date.getDayOfMonth() - 1] = (int) count;
-//        }
-//        return scheduleCountArray;
+        int[] scheduleCountArray = new int[endDay.getDayOfMonth()];
 
-        return IntStream.rangeClosed(1, endDay.getDayOfMonth())
-                .map(dayOfMonth -> (int) scheduleList.stream()
-                        .filter(schedule -> schedule.getDeadline().equals(LocalDate.of(endDay.getYear(), endDay.getMonth(), dayOfMonth)))
-                        .count())
-                .toArray();
+        for (int i = 0; i < scheduleCountArray.length; i++) {
+            final int dayOfMonth = i + 1;
+            long count = scheduleList.stream()
+                    .filter(schedule -> schedule.getDeadline().equals(LocalDate.of(endDay.getYear(), endDay.getMonth(), dayOfMonth)))
+                    .count();
+            scheduleCountArray[i] = (int) count;
+        }
+        return scheduleCountArray;
     }
 
     public ScheduleResponseDto.MonthResponseDto monthlyCount(int yearNumber, int monthNumber, Principal principal) {
