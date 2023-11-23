@@ -3,6 +3,7 @@ package unilearn.unilearn.Schedule.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.MemberRemoval;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import unilearn.unilearn.Schedule.dto.ScheduleRequestDto;
 import unilearn.unilearn.Schedule.dto.ScheduleResponseDto;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -76,4 +78,34 @@ public class ScheduleService {
         schedule.setChecked();
         scheduleRepository.save(schedule);
     }
+
+    private int[] calculateScheduleCountArray(LocalDate startDay, LocalDate endDay, List<Schedule> scheduleList) {
+        int[] scheduleCountArray = new int[endDay.getDayOfMonth()];
+
+        for (int i = 0; i < scheduleCountArray.length; i++) {
+            final int dayOfMonth = i + 1;
+            long count = scheduleList.stream()
+                    .filter(schedule -> schedule.getDeadline().equals(LocalDate.of(endDay.getYear(), endDay.getMonth(), dayOfMonth)))
+                    .count();
+            scheduleCountArray[i] = (int) count;
+        }
+        return scheduleCountArray;
+    }
+
+    public ScheduleResponseDto.MonthResponseDto monthlyCount(int yearNumber, int monthNumber, Principal principal) {
+        User user = userRepository.findByNickname(principal.getName());
+        List<Schedule> scheduleList = scheduleRepository.findByYearAndMonth(yearNumber, monthNumber, user);
+
+        LocalDate startDay = LocalDate.of(yearNumber, monthNumber, 1);
+        LocalDate endDay = startDay.withDayOfMonth(startDay.lengthOfMonth());
+
+        int[] scheduleCountArray = calculateScheduleCountArray(startDay, endDay, scheduleList);
+
+        return ScheduleResponseDto.MonthResponseDto.builder()
+                .year(yearNumber)
+                .month(monthNumber)
+                .scheduleCount(scheduleCountArray)
+                .build();
+    }
+
 }
