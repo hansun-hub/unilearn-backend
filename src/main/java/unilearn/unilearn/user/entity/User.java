@@ -29,6 +29,7 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String loginId;
     @Column(length = 100, unique = true)
     private String email;
+    private Integer emailCouont;
     private boolean emailChecked;
     private String checkEmailToken;
     private LocalDateTime emailCheckTokenGeneratedAt;
@@ -47,7 +48,7 @@ public class User extends BaseTimeEntity implements UserDetails {
     private School school;
 
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private Temperature temperature;
 
 
@@ -92,6 +93,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     public void updateIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public void createCheckEmailToken(String checkEmailToken) {
+        this.checkEmailToken = checkEmailToken;
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
     }
 
 }
