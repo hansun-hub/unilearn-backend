@@ -80,6 +80,9 @@ public class AssignmentSubmitPostService {
             return assignmentSubmitPostRepository.save(existingPost);
         }
 
+    public boolean hasUserSubmittedAssignment(User user, AssignmentsPosts assignmentsPosts) {
+        return assignmentSubmitPostRepository.existsByUserAndAssignmentsPosts(user, assignmentsPosts);
+    }
 
 
 }
