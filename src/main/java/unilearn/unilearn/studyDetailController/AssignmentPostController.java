@@ -119,9 +119,18 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        AssignmentsPosts updatedAssignmentPost = assignmentPostService.updateAssignmentPost(postId, updatedPost);
-        return new ResponseEntity<>(updatedAssignmentPost.getId(), HttpStatus.OK);
+        AssignmentsPosts assignmentstPosts = assignmentPostRepository.findById(postId).orElse(null);
+        User postUser = assignmentstPosts.getUser();
+        if (user.equals(postUser)) {
+            AssignmentsPosts updatedAssignmentPost = assignmentPostService.updateAssignmentPost(postId, updatedPost);
+            return new ResponseEntity<>(updatedAssignmentPost.getId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
+
+
 
     // 과제에 대한 과제 제출 게시글 작성
     @PostMapping("/{assignments-posts-id}/submit")
@@ -145,7 +154,9 @@ public class AssignmentPostController {
         AssignmentsPosts assignmentsPosts = assignmentPostRepository.findById(assignmentsPostsId)
                 .orElseThrow(() -> new RuntimeException("Assignment Post not found with id: " + assignmentsPostsId));
         //Study study = assignmentsPosts.getStudy();
-
+        if (assignmentSubmitPostService.hasUserSubmittedAssignment(user, assignmentsPosts)) {
+            return new  ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         AssignmentsSubmitPosts entity = new AssignmentsSubmitPosts();
         entity.setAssignmentsPosts(assignmentsPosts);
@@ -177,8 +188,15 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        AssignmentsSubmitPosts updatedAssignmentSubmitPost = assignmentSubmitPostService.updateSubmit(postId, updatedPost);
-        return new ResponseEntity<>(updatedAssignmentSubmitPost.getId(), HttpStatus.OK);
+        AssignmentsSubmitPosts assignmentsSubmitPosts = assignmentSubmitPostRepository.findById(postId).orElse(null);
+        User postUser = assignmentsSubmitPosts.getUser();
+        if (user.equals(postUser)) {
+            AssignmentsSubmitPosts updatedAssignmentSubmitPost = assignmentSubmitPostService.updateSubmit(postId, updatedPost);
+            return new ResponseEntity<>(updatedAssignmentSubmitPost.getId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
 
     //특정 과제 내가 쓴 과제 제출 게시글 상세보기

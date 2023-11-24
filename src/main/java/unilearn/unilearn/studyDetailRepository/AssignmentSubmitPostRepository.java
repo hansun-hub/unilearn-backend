@@ -16,6 +16,8 @@ public interface AssignmentSubmitPostRepository extends JpaRepository<Assignment
 
     List<AssignmentsSubmitPosts> findByAssignmentsPosts(AssignmentsPosts assignmentsPosts);
     AssignmentsSubmitPosts findByAssignmentsPostsAndUser(AssignmentsPosts assignmentsPosts , User user);
+    boolean existsByUserAndAssignmentsPosts(User user, AssignmentsPosts assignmentsPosts);
+
 
 
 }
