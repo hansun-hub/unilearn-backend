@@ -1,6 +1,7 @@
 package unilearn.unilearn.subject.entity;
 
 import lombok.*;
+import unilearn.unilearn.global.entity.BaseTimeEntity;
 import unilearn.unilearn.subject.Dto.QuizCommentForm;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class QuizComment {
+public class QuizComment extends BaseTimeEntity {
 
     @Id @Column(name="quizcomment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
