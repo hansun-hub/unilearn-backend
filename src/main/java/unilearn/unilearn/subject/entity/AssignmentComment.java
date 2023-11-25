@@ -1,6 +1,7 @@
 package unilearn.unilearn.subject.entity;
 
 import lombok.*;
+import unilearn.unilearn.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class AssignmentComment {
+public class AssignmentComment extends BaseTimeEntity {
 
     @Id @Column(name="assignment_comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

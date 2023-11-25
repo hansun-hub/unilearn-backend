@@ -1,6 +1,7 @@
 package unilearn.unilearn.subject.entity;
 
 import lombok.*;
+import unilearn.unilearn.global.entity.BaseTimeEntity;
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Builder
-public class Quiz {
+public class Quiz extends BaseTimeEntity {
 
     @Id @Column(name="quiz_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
