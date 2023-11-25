@@ -21,7 +21,6 @@ public class StudyCreateRequestDTO {
     private boolean isOffline;
     private String offlineLocation;
     private int studyRecruitedNum;
-    private String studyStatus;
     private int studyDeposit;
     private LocalDate studyStartDay;
     private LocalDate studyDeadline;

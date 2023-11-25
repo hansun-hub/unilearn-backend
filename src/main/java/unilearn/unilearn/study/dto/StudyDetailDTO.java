@@ -18,7 +18,6 @@ public class StudyDetailDTO {
     private String studyStartDay;
     private String studyDeadline;
     private String studyLocation;
-    private String studyStatus;
 
     public StudyDetailDTO(Study study) {
         this.studyId = study.getStudy_id();
@@ -30,6 +29,5 @@ public class StudyDetailDTO {
         this.studyStartDay = study.getStudy_start_day().toString();
         this.studyDeadline = study.getStudy_deadline().toString();
         this.studyLocation = study.is_offline() ? study.getOffline_location() : "비대면";
-        this.studyStatus = study.getStudyStatus();
     }
 }

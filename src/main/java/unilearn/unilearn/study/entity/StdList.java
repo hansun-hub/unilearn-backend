@@ -28,14 +28,8 @@ public class StdList {
     @JoinColumn(name = "study_id", nullable = false)
     private Study study;
 
-
-//    subject 테이블 부재
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "subject_id", nullable = false)
-//    private Subject subject;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", nullable = false)
+    @JoinColumn(name = "subject_id", nullable = true)
     private Subject subject;
 
 

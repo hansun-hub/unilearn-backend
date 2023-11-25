@@ -12,6 +12,7 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
@@ -34,4 +35,5 @@ public class RegularMeeting {
 
     @Column(nullable = false)
     private LocalTime end_time;
+
 }
