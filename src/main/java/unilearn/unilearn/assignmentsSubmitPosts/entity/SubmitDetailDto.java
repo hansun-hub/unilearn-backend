@@ -20,6 +20,6 @@ public class SubmitDetailDto {
     String name;
     String content;
     //이미지
-
+    //private String img;
 
 }
