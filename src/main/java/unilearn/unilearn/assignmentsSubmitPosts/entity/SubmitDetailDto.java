@@ -19,7 +19,7 @@ public class SubmitDetailDto {
     LocalDateTime submit_time;
     String name;
     String content;
-    //이미지
-    //private String img;
+    //이미지 url
+    String img;
 
 }

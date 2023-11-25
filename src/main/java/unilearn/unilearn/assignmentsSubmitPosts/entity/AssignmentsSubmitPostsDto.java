@@ -1,12 +1,21 @@
 package unilearn.unilearn.assignmentsSubmitPosts.entity;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import unilearn.unilearn.global.config.S3Uploader;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+@Getter@Setter
 public class AssignmentsSubmitPostsDto {
-    //private String img;
+    private String img;
     private String title;
     private String content;
     private LocalDateTime deadline;
+    private  S3Uploader s3Uploader;
 
     // 기본 생성자
     public AssignmentsSubmitPostsDto() {
@@ -14,7 +23,7 @@ public class AssignmentsSubmitPostsDto {
     }
 
 
-    public AssignmentsSubmitPostsDto(String title, String content, LocalDateTime deadline) {
+    public AssignmentsSubmitPostsDto(String img, String title, String content, LocalDateTime deadline) {
 
         this.content = content;
     }
@@ -28,8 +37,11 @@ public class AssignmentsSubmitPostsDto {
     public void setContent(String content) {
         this.content = content;
     }
+    public String getImg(){ return img;}
 
-
+    public  void setImg(MultipartFile multipartFile)throws IOException {
+        String dirName = "assignnmentsSubmitPosts/submitimg";
+        this.img = s3Uploader.upload(multipartFile,dirName);}
 
 
     // toString 메서드 (디버깅 및 로깅용)

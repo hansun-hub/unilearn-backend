@@ -163,7 +163,7 @@ public class AssignmentPostController {
         //entity.setStudy(study);
         entity.setUser(user);
         entity.setContent(dto.getContent());
-
+        entity.setImg(dto.getImg());
 
         AssignmentsSubmitPosts createdSubmitPost = assignmentSubmitPostService.createSubmitPost(entity);
         //제출인원 +1
@@ -178,7 +178,7 @@ public class AssignmentPostController {
     @PatchMapping({"/{assignments-posts-id}/submit/{assignments_submit_posts_id}"})
     public ResponseEntity<Long> submitAssignmentPost(
             @PathVariable("assignments_submit_posts_id") Long postId,
-            @RequestBody AssignmentsSubmitPosts updatedPost, BindingResult bindingResult, Principal principal) {
+            @RequestBody AssignmentsSubmitPostsDto updatedPost, BindingResult bindingResult, Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else if (bindingResult.hasErrors()) {
@@ -191,8 +191,8 @@ public class AssignmentPostController {
         AssignmentsSubmitPosts assignmentsSubmitPosts = assignmentSubmitPostRepository.findById(postId).orElse(null);
         User postUser = assignmentsSubmitPosts.getUser();
         if (user.equals(postUser)) {
-            AssignmentsSubmitPosts updatedAssignmentSubmitPost = assignmentSubmitPostService.updateSubmit(postId, updatedPost);
-            return new ResponseEntity<>(updatedAssignmentSubmitPost.getId(), HttpStatus.OK);
+            assignmentSubmitPostService.updateSubmit(postId, updatedPost);
+            return new ResponseEntity<>(postId, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -306,7 +306,9 @@ public class AssignmentPostController {
         Evaluation savedEvaluation = evaluationRepository.save(evaluation);
         assignmentsSubmitPosts.setTotal_score(assignmentsSubmitPosts.getTotal_score()+evaluation.getTotal_score());
         assignmentsSubmitPosts.setFeedback(assignmentsSubmitPosts.getFeedback()+" "+evaluation.getFeedback());
-        assignmentSubmitPostService.updateSubmit(assignmentsSubmitPostsId, assignmentsSubmitPosts);
+
+        assignmentSubmitPostRepository.save(assignmentsSubmitPosts);
+
         //total score 1~5이므로 0.1씩 반영하면 될 듯
         User target_user = assignmentsSubmitPosts.getUser();
         Temperature temperature = temperatureRepository.findTemperatureByUser(target_user);

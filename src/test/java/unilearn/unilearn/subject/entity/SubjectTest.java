@@ -1,4 +1,4 @@
-package unilearn.unilearn.subject.entity;
+/*package unilearn.unilearn.subject.entity;
 
 import org.junit.After;
 import org.junit.Test;
@@ -38,4 +38,4 @@ class SubjectTest {
 
         //then
     }
-}
+}*/

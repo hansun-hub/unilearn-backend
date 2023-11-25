@@ -3,10 +3,7 @@ package unilearn.unilearn.studyDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.MySubmitDto;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitDetailDto;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitListDto;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.*;
 import unilearn.unilearn.studyDetailRepository.AssignmentPostRepository;
 import unilearn.unilearn.studyDetailRepository.AssignmentSubmitPostRepository;
 import unilearn.unilearn.user.entity.User;
@@ -37,6 +34,7 @@ public class AssignmentSubmitPostService {
                 .name(assignmentsSubmitPosts.getUser().getNickname())//제출자명
                 .content(assignmentsSubmitPosts.getContent())
                 .submit_post_id(assignmentsSubmitPosts.getId())
+                .img(assignmentsSubmitPosts.getImg())
                 .build();
 
     }
@@ -45,7 +43,8 @@ public class AssignmentSubmitPostService {
         AssignmentsPosts assignmentsPosts = assignmentPostRepository.findById(postId)
                 .orElseThrow(() -> new StudyNotFoundException("post not found with id: " + postId));
         AssignmentsSubmitPosts submitPosts =  assignmentSubmitPostRepository.findByAssignmentsPostsAndUser(assignmentsPosts, user);
-        return MySubmitDto.builder().content(submitPosts.getContent()).build();
+        return MySubmitDto.builder().content(submitPosts.getContent())
+                        .img(submitPosts.getImg()).build();
     }
 
 
@@ -65,7 +64,7 @@ public class AssignmentSubmitPostService {
             return assignmentSubmitPostRepository.save(entity);
         }
 
-    public AssignmentsSubmitPosts updateSubmit(Long postId, AssignmentsSubmitPosts updatedPost) {
+    public AssignmentsSubmitPosts updateSubmit(Long postId, AssignmentsSubmitPostsDto updatedPost) {
         //과제제출 게시글 수정
             // 추가적인 로직 (예: 수정 권한 체크 등)이 필요하다면 여기에 추가
             AssignmentsSubmitPosts existingPost = assignmentSubmitPostRepository.findById(postId)
@@ -75,10 +74,15 @@ public class AssignmentSubmitPostService {
             if (updatedPost.getContent() != null) {
                 existingPost.setContent(updatedPost.getContent());
             }
+            // 업데이트할 필드가 null이 아닌 경우에만 업데이트
+            if (updatedPost.getImg() != null) {
+                existingPost.setContent(updatedPost.getContent());
+            }
 
 
             return assignmentSubmitPostRepository.save(existingPost);
         }
+
 
     public boolean hasUserSubmittedAssignment(User user, AssignmentsPosts assignmentsPosts) {
         return assignmentSubmitPostRepository.existsByUserAndAssignmentsPosts(user, assignmentsPosts);

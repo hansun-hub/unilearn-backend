@@ -27,7 +27,7 @@ public class AssignmentsSubmitPosts {
     @Column(name="assignments_submit_posts_id")
     private Long id;
 
-    //private String img;
+    private String img;
     //과제랑 연결해야해서 추가했습니다 - 서윤
     @ManyToOne
     @JoinColumn(name = "assignments_posts_id")
