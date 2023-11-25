@@ -13,5 +13,5 @@ public class MySubmitDto {
 
     //이미지, 내용
     String content;
-    //private String img;
+    String img;
 }
