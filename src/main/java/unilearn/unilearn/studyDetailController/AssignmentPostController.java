@@ -136,7 +136,7 @@ public class AssignmentPostController {
     @PostMapping("/{assignments-posts-id}/submit")
     public ResponseEntity<Long> submitAssignment(
             @PathVariable("assignments-posts-id") Long assignmentsPostsId,
-            @RequestBody AssignmentsSubmitPostsDto dto,
+            @ModelAttribute AssignmentsSubmitPostsDto dto,
             BindingResult bindingResult, Principal principal) {
 
         if (principal.getName() != null) {
@@ -178,7 +178,7 @@ public class AssignmentPostController {
     @PatchMapping({"/{assignments-posts-id}/submit/{assignments_submit_posts_id}"})
     public ResponseEntity<Long> submitAssignmentPost(
             @PathVariable("assignments_submit_posts_id") Long postId,
-            @RequestBody AssignmentsSubmitPostsDto updatedPost, BindingResult bindingResult, Principal principal) {
+            @ModelAttribute AssignmentsSubmitPostsDto updatedPost, BindingResult bindingResult, Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else if (bindingResult.hasErrors()) {

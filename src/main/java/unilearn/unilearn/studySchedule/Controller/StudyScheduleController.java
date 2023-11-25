@@ -67,9 +67,9 @@ public class StudyScheduleController {
         return new ResponseEntity<>(studySchedule.getId(), HttpStatus.CREATED);
     }
     //특정 일자의 스터디 리스트 조회
-    @GetMapping("/daily-schedule")
+    @GetMapping("/daily-schedule/{study_id}")
     public ResponseEntity<List<OnedayDto>> oneDayList(
-            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline, Principal principal){
+            @PathVariable("study_id") Long studyId, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline, Principal principal){
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else {
@@ -77,14 +77,14 @@ public class StudyScheduleController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        List<OnedayDto> responseFormList = studyScheduleService.onedayList(deadline, principal);
+        List<OnedayDto> responseFormList = studyScheduleService.onedayList(deadline, principal,studyId);
         return ResponseEntity.status(HttpStatus.OK).body(responseFormList);
     }
 
     //월별 캘린더 일정 개수 조회
-    @GetMapping("/monthly-schedule-count")
+    @GetMapping("/monthly-schedule-count/{study_id}")
     public ResponseEntity<MonthDto> monthlyCount(
-            @RequestParam("year")int yearNumber, @RequestParam("month")int monthNumber,
+            @PathVariable("study_id") Long studyId,@RequestParam("year")int yearNumber, @RequestParam("month")int monthNumber,
             Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
@@ -93,7 +93,7 @@ public class StudyScheduleController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        MonthDto responseDto = studyScheduleService.monthlyCount(yearNumber, monthNumber, principal);
+        MonthDto responseDto = studyScheduleService.monthlyCount(yearNumber, monthNumber, principal,studyId);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 }

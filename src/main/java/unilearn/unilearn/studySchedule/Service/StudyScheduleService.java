@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import unilearn.unilearn.Schedule.dto.ScheduleResponseDto;
 import unilearn.unilearn.Schedule.entity.Schedule;
 import unilearn.unilearn.Schedule.service.ScheduleService;
+import unilearn.unilearn.study.entity.Study;
+import unilearn.unilearn.study.repository.StudyRepository;
 import unilearn.unilearn.study.service.StudyService;
 import unilearn.unilearn.studySchedule.Repository.StudyScheduleRepository;
 import unilearn.unilearn.studySchedule.dto.MonthDto;
@@ -27,10 +29,11 @@ public class StudyScheduleService {
 
     private final UserRepository userRepository;
     private final StudyScheduleRepository studyScheduleRepository;
-
-    public MonthDto monthlyCount(int yearNumber, int monthNumber, Principal principal) {
+    private  final StudyRepository studyRepository;
+    public MonthDto monthlyCount(int yearNumber, int monthNumber, Principal principal,Long studyId) {
         User user = userRepository.findByNickname(principal.getName());
-        List<StudySchedule> studySchedules = studyScheduleRepository.findByYearAndMonth(yearNumber, monthNumber, user);
+        Study study = studyRepository.findById(studyId).orElse(null);
+        List<StudySchedule> studySchedules = studyScheduleRepository.findByYearAndMonth(yearNumber, monthNumber, user,study);
 
         LocalDate startDay = LocalDate.of(yearNumber, monthNumber, 1);
         LocalDate endDay = startDay.withDayOfMonth(startDay.lengthOfMonth());
@@ -56,9 +59,10 @@ public class StudyScheduleService {
         }
         return scheduleCountArray;
     }
-    public List<OnedayDto> onedayList(LocalDate deadline, Principal principal) {
+    public List<OnedayDto> onedayList(LocalDate deadline, Principal principal,Long studyId) {
         User user = userRepository.findByNickname(principal.getName());
-        List<StudySchedule> scheduleList = studyScheduleRepository.findByUserAndDeadline(user, deadline);
+        Study study = studyRepository.findById(studyId).orElse(null);
+        List<StudySchedule> scheduleList = studyScheduleRepository.findByUserAndDeadlineAndStudy(user, deadline, study);
         return scheduleList.stream()
                 .map(schedule -> toOnedayDto(schedule))
                 .collect(Collectors.toList());

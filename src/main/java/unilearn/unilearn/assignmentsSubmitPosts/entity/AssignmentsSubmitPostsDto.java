@@ -9,7 +9,7 @@ import unilearn.unilearn.global.config.S3Uploader;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-@Getter@Setter
+@Getter@Setter@Component
 public class AssignmentsSubmitPostsDto {
     private String img;
     private String title;
