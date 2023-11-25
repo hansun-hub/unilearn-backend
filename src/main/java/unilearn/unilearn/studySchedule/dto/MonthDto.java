@@ -1,17 +1,17 @@
-package unilearn.unilearn.assignmentsSubmitPosts.entity;
+package unilearn.unilearn.studySchedule.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MySubmitDto {
+public class MonthDto {
 
-    //이미지, 내용
-    String content;
-    //private String img;
+    private int year;
+    private int month;
+    private int[] scheduleCount;
+
 }

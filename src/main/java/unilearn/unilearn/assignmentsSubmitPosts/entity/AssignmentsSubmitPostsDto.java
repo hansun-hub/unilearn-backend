@@ -3,7 +3,7 @@ package unilearn.unilearn.assignmentsSubmitPosts.entity;
 import java.time.LocalDateTime;
 
 public class AssignmentsSubmitPostsDto {
-
+    //private String img;
     private String title;
     private String content;
     private LocalDateTime deadline;
