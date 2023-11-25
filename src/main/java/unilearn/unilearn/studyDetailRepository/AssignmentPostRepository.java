@@ -3,6 +3,7 @@ package unilearn.unilearn.studyDetailRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
+import unilearn.unilearn.study.entity.Study;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ import java.util.List;
 @Repository
 public interface AssignmentPostRepository extends JpaRepository<AssignmentsPosts, Long> {
     //과제 게시글 전체 조회용 (마감전&후)
-    List<AssignmentsPosts> findByStatus(String status);
+    List<AssignmentsPosts> findByStatusAndStudy(String status, Study study);
 
 }

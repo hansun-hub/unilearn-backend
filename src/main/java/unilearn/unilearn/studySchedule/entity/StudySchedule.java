@@ -4,6 +4,7 @@ import lombok.*;
 
 import unilearn.unilearn.study.entity.Study;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import unilearn.unilearn.user.entity.User;
@@ -26,24 +27,28 @@ public class StudySchedule {
     private Long id;
 
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="study_id")
     private Study study;
-    */
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
+    private LocalDate deadline;
+    private String content;
 //    private int year;
 //    private int month;
 //    private String date;
-    private LocalDateTime scheduleDate;
+//    private LocalDateTime scheduleDate;
 
-    private String scheduleName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
+//    private String scheduleName;
+
+//    private LocalDateTime createdAt;
+//    private LocalDateTime updatedAt;
 
 
 //    @ElementCollection

@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentListDto;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPosts;
 import unilearn.unilearn.assignmentsPosts.entity.AssignmentsPostsDto;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPosts;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.AssignmentsSubmitPostsDto;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitDetailDto;
-import unilearn.unilearn.assignmentsSubmitPosts.entity.SubmitListDto;
+import unilearn.unilearn.assignmentsSubmitPosts.entity.*;
 import unilearn.unilearn.evaluation.entity.Evaluation;
 import unilearn.unilearn.evaluation.entity.EvaluationDto;
+import unilearn.unilearn.study.controller.StudyController;
+import unilearn.unilearn.study.entity.Study;
+import unilearn.unilearn.study.repository.StudyRepository;
 import unilearn.unilearn.studyDetailRepository.AssignmentPostRepository;
 import unilearn.unilearn.studyDetailRepository.AssignmentSubmitPostRepository;
 import unilearn.unilearn.studyDetailRepository.EvaluationRepository;
@@ -23,6 +23,7 @@ import unilearn.unilearn.studyDetailService.AssignmentPostService;
 import unilearn.unilearn.studyDetailService.AssignmentSubmitPostService;
 import unilearn.unilearn.user.entity.Temperature;
 import unilearn.unilearn.user.entity.User;
+import unilearn.unilearn.user.exception.StudyNotFoundException;
 import unilearn.unilearn.user.repository.TemperatureRepository;
 import unilearn.unilearn.user.repository.UserRepository;
 
@@ -44,13 +45,14 @@ public class AssignmentPostController {
 
     private final UserRepository userRepository;
     private final AssignmentPostRepository assignmentPostRepository;
+    private  final StudyRepository studyRepository;
     private final AssignmentSubmitPostRepository assignmentSubmitPostRepository;
     private  final EvaluationRepository evaluationRepository;
     private  final TemperatureRepository temperatureRepository;
 
-    //과제 게시글 전체 조회 - 마감전
-    @GetMapping(params = "status=before")
-    public ResponseEntity<List<AssignmentListDto>> getAllAssignmentPostsBeforeDeadline(Principal principal) {
+    //특정 스터디의 과제 게시글 전체 조회 - 마감전
+    @GetMapping(value = "/{study_id}",params = "status=before")
+    public ResponseEntity<List<AssignmentListDto>> getAllAssignmentPostsBeforeDeadline(@PathVariable("study_id") Long study_id, Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else {
@@ -58,14 +60,14 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        List<AssignmentListDto> assignmentListDtos = assignmentPostService.getAllAssignmentPostsBeforeDeadline();
+        List<AssignmentListDto> assignmentListDtos = assignmentPostService.getAllAssignmentPostsBeforeDeadline(study_id);
 
         return new ResponseEntity<>(assignmentListDtos, HttpStatus.OK);
     }
 
-    //과제 게시글 전체 조회 -마감후
-    @GetMapping(params = "status=after")
-    public ResponseEntity<List<AssignmentListDto>> getAllAssignmentPostsAfterDeadline(Principal principal) {
+    //특정 스터디의 과제 게시글 전체 조회 -마감후
+    @GetMapping(value = "/{study_id}",params = "status=after")
+    public ResponseEntity<List<AssignmentListDto>> getAllAssignmentPostsAfterDeadline(@PathVariable("study_id") Long study_id, Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else {
@@ -73,13 +75,13 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        List<AssignmentListDto> assignmentListDtos = assignmentPostService.getAllAssignmentPostsAfterDeadline();
+        List<AssignmentListDto> assignmentListDtos = assignmentPostService.getAllAssignmentPostsAfterDeadline(study_id);
         return new ResponseEntity<>(assignmentListDtos, HttpStatus.OK);
     }
 
     //과제 게시글 생성
-    @PostMapping
-    public ResponseEntity<Long> createAssignmentPost(@RequestBody AssignmentsPostsDto dto, BindingResult bindingResult, Principal principal) {
+    @PostMapping("/{study_id}")
+    public ResponseEntity<Long> createAssignmentPost(@PathVariable("study_id") Long studyId, @RequestBody AssignmentsPostsDto dto, BindingResult bindingResult, Principal principal) {
         if (principal.getName() != null) {
             System.out.println(principal.getName() + principal);
         } else if (bindingResult.hasErrors()) {
@@ -93,12 +95,18 @@ public class AssignmentPostController {
         entity.setUser(user);
         entity.setTitle(dto.getTitle());
         entity.setDeadline(dto.getDeadline());
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> {
+                    log.error("Study not found with id: " + studyId);
+                    return new StudyNotFoundException("Study not found with id: " + studyId);
+                });
+        entity.setStudy(study);
         AssignmentsPosts createdPost = assignmentPostService.createAssignmentPost(entity);
         return new ResponseEntity<>(createdPost.getId(), HttpStatus.CREATED);
     }
 
     //과제 게시글 수정
-    @PatchMapping("/{assignments-posts_id}")
+    @PatchMapping("edit-post/{assignments-posts_id}")
     public ResponseEntity<Long> updateAssignmentPost(
             @PathVariable("assignments-posts_id") Long postId,
             @RequestBody AssignmentsPosts updatedPost, BindingResult bindingResult, Principal principal) {
@@ -111,9 +119,18 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        AssignmentsPosts updatedAssignmentPost = assignmentPostService.updateAssignmentPost(postId, updatedPost);
-        return new ResponseEntity<>(updatedAssignmentPost.getId(), HttpStatus.OK);
+        AssignmentsPosts assignmentstPosts = assignmentPostRepository.findById(postId).orElse(null);
+        User postUser = assignmentstPosts.getUser();
+        if (user.equals(postUser)) {
+            AssignmentsPosts updatedAssignmentPost = assignmentPostService.updateAssignmentPost(postId, updatedPost);
+            return new ResponseEntity<>(updatedAssignmentPost.getId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
+
+
 
     // 과제에 대한 과제 제출 게시글 작성
     @PostMapping("/{assignments-posts-id}/submit")
@@ -137,7 +154,9 @@ public class AssignmentPostController {
         AssignmentsPosts assignmentsPosts = assignmentPostRepository.findById(assignmentsPostsId)
                 .orElseThrow(() -> new RuntimeException("Assignment Post not found with id: " + assignmentsPostsId));
         //Study study = assignmentsPosts.getStudy();
-
+        if (assignmentSubmitPostService.hasUserSubmittedAssignment(user, assignmentsPosts)) {
+            return new  ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         AssignmentsSubmitPosts entity = new AssignmentsSubmitPosts();
         entity.setAssignmentsPosts(assignmentsPosts);
@@ -169,9 +188,37 @@ public class AssignmentPostController {
         }
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
-        AssignmentsSubmitPosts updatedAssignmentSubmitPost = assignmentSubmitPostService.updateSubmit(postId, updatedPost);
-        return new ResponseEntity<>(updatedAssignmentSubmitPost.getId(), HttpStatus.OK);
+        AssignmentsSubmitPosts assignmentsSubmitPosts = assignmentSubmitPostRepository.findById(postId).orElse(null);
+        User postUser = assignmentsSubmitPosts.getUser();
+        if (user.equals(postUser)) {
+            AssignmentsSubmitPosts updatedAssignmentSubmitPost = assignmentSubmitPostService.updateSubmit(postId, updatedPost);
+            return new ResponseEntity<>(updatedAssignmentSubmitPost.getId(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
+
+    //특정 과제 내가 쓴 과제 제출 게시글 상세보기
+    @GetMapping("mysubmit/{assignments-posts-id}")
+    public ResponseEntity<MySubmitDto> getMySubmitDetail(@PathVariable("assignments-posts-id") Long postId, Principal principal){
+        if (principal.getName() != null){
+            System.out.println(principal.getName() + principal);
+        }
+
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        User user = userRepository.findByNickname(principal.getName());
+        log.info("principal user = " + user.toString());
+        MySubmitDto mySubmitDto = assignmentSubmitPostService.getMysubmit(postId,user);
+        return new ResponseEntity<>(mySubmitDto, HttpStatus.OK);
+    }
+
+
+
+
+
 
     //과제 제출 게시글 마감후에 해당과제에 대한 과제제출 전체 리스트 보기
     @GetMapping({"/{assignments-posts-id}/submit"})
