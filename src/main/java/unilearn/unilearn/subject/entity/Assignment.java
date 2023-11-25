@@ -1,5 +1,7 @@
 package unilearn.unilearn.subject.entity;
 
+import lombok.*;
+import unilearn.unilearn.global.entity.BaseTimeEntity;
 import unilearn.unilearn.user.entity.User;
 
 import javax.persistence.*;
@@ -7,9 +9,15 @@ import java.util.Date;
 
 // 과제 엔티티
 @Entity
-public class Assignment {
+@Table(name="assignment")
+@Getter
+@Setter
+@AllArgsConstructor @NoArgsConstructor
+@ToString
+@Builder
+public class Assignment extends BaseTimeEntity {
 
-    @Id
+    @Id    @Column(name="assignment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,7 +31,6 @@ public class Assignment {
 
     private String content; // 내용
 
-    private String photo; // 사진
 
 
 }

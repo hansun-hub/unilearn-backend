@@ -1,12 +1,21 @@
 package unilearn.unilearn.subject.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 // 과제 댓글 엔티티
 @Entity
+@Table(name="assignment_comment")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 public class AssignmentComment {
 
-    @Id
+    @Id @Column(name="assignment_comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
