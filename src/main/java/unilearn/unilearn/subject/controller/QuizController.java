@@ -32,7 +32,13 @@ public class QuizController {
 
     // 퀴즈 게시판 모든 게시글 조회
     @GetMapping("/api/quiz")
-    public ResponseEntity<List<QuizForm>> getAllQuiz() {
+    public ResponseEntity<List<QuizForm>> getAllQuiz(Principal principal) {
+        if (principal.getName() != null) {
+            System.out.println(principal.getName() + principal);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         List<Quiz> quizList = quizRepository.findAll();
 
         List<QuizForm> returnDtoList = new ArrayList<>();
@@ -50,7 +56,13 @@ public class QuizController {
 
     // 퀴즈 게시판 특정 게시글 조회
     @GetMapping("/api/quiz/{quiz_id}")
-    public ResponseEntity<QuizForm> getQuizById(@PathVariable Long quiz_id) {
+    public ResponseEntity<QuizForm> getQuizById(@PathVariable Long quiz_id, Principal principal) {
+        if (principal.getName() != null) {
+            System.out.println(principal.getName() + principal);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         Optional<Quiz> optionalQuiz = quizRepository.findById(quiz_id);
 
         if(optionalQuiz.isEmpty())

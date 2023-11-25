@@ -29,7 +29,12 @@ public class AssignmentController {
 
     // 과제 게시판 모든 게시글 조회
     @GetMapping("/api/assignments")
-    public ResponseEntity<List<AssignmentForm>> getAllAssignments() {
+    public ResponseEntity<List<AssignmentForm>> getAllAssignments(Principal principal) {
+        if (principal.getName() != null) {
+            System.out.println(principal.getName() + principal);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         List<Assignment> assignmentsList = assignmentRepository.findAll();
 
         List<AssignmentForm> returnDtoList = new ArrayList<>();
@@ -47,7 +52,12 @@ public class AssignmentController {
 
     // 과제 게시판 특정 게시글 조회
     @GetMapping("/api/assignments/{assignment_id}")
-    public ResponseEntity<AssignmentForm> getAssignmentById(@PathVariable Long assignment_id) {
+    public ResponseEntity<AssignmentForm> getAssignmentById(@PathVariable Long assignment_id, Principal principal) {
+        if (principal.getName() != null) {
+            System.out.println(principal.getName() + principal);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         Optional<Assignment> optionalAssignments = assignmentRepository.findById(assignment_id);
 
         if (optionalAssignments.isEmpty()) {
@@ -66,10 +76,13 @@ public class AssignmentController {
     // 과제 게시판 게시글 생성
     @PostMapping("/api/assignments/create")
     public ResponseEntity<AssignmentForm> create(@Valid @RequestBody AssignmentForm assignmentForm, BindingResult bindingResult, Principal principal) {
-        if (principal == null || bindingResult.hasErrors()) {
+        if (principal.getName() != null) {
+            System.out.println(principal.getName() + principal);
+        } else if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-
         User user = userRepository.findByNickname(principal.getName());
         log.info("principal user = " + user.toString());
 
