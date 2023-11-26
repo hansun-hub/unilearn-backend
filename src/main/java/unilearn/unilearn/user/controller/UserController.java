@@ -47,8 +47,8 @@ public class UserController {
 
 
     @GetMapping("/login")
-    public ResponseEntity login(@RequestBody LoginForm form){
-        return userService.login(form);
+    public ResponseEntity login(@RequestParam("loginId") String loginId, @RequestParam("password") String password){
+        return userService.login(loginId, password);
     }
 
     @GetMapping("/api/user-detail")
