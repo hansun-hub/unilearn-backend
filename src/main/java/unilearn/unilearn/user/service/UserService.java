@@ -137,18 +137,18 @@ public class UserService {
         return true;
     }
 
-    public ResponseEntity login(LoginForm form){
-        User user = userRepository.findByLoginId(form.getLoginId());
+    public ResponseEntity login(String loginId, String password){
+        User user = userRepository.findByLoginId(loginId);
         if (user == null){
-            throw new UsernameNotFoundException(String.format("ID: [%s]를 찾을 수 없습니다.", form.getLoginId()));
+            throw new UsernameNotFoundException(String.format("ID: [%s]를 찾을 수 없습니다.", loginId));
         }
-        if (!passwordEncoder.matches(form.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(password, user.getPassword())){
             throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
         }
         if (!user.isEmailChecked()) {
             throw new IllegalArgumentException("인증되지 않은 사용자입니다.");
         }
-        getAuthentication(form.getLoginId(), form.getPassword());
+        getAuthentication(loginId, password);
         Map<String,String> responseBody = new HashMap<>();
         responseBody.put("token", getJwtToken(user));
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
