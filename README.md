@@ -10,4 +10,5 @@
 ![7](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/9013316d-28e3-4d9f-be07-21ca39813916)
 ![8](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/822d5a5f-f39d-4358-b8fd-b1ddee3df5fc)
 ![9](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/c9111ec1-2faf-457b-a3cf-3e7a9735deb4)
-![10](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/8734c63f-66eb-4e66-9814-a1554f37c663)
+![12](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/176cc9a6-7ba8-49e9-bfb9-48417108d336)
+![11](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/ffcd9c47-f22d-491a-a6be-d71668ac99c7)
