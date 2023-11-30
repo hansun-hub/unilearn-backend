@@ -1,6 +1,4 @@
 # unilearn-backend
-슈멋사 1조 유니런 백엔드 레포
-
 ![0](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/16e5986b-d429-4995-bdf2-9b06c4205659)
 ![1](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/bf6e64e4-5bcf-4004-9700-8ef9874f0ff8)
 ![2](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/99bace2a-af99-44ad-b068-a06542dc80f2)
