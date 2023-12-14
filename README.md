@@ -2,7 +2,8 @@
 > 안심하고 맡기는 스터디 관리 서비스, 유니런
 
 ![메인](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/16e5986b-d429-4995-bdf2-9b06c4205659)
-![프로토타입](https://github.com/ppparkta/42seoul/assets/86940801/78b66300-0f1a-46ec-90cd-07b24f4e32c4)
+![프토로타입](https://github.com/likelion-unilearn/unilearn-backend/assets/86940801/0e49550e-35a1-4beb-b4a7-ccba3fa6f613)
+
 
 ## 📔 Services
 1. 이중 인증을 통한 안전한 대학생 신원 확인!
